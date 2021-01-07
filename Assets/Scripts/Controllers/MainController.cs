@@ -1,62 +1,28 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
-public class MainController : MonoBehaviour
+public class MainController : Singleton<MainController>
 {
-    public CameraController cameraCon;
-    [SerializeField]
-    private int nowLevel;
+    [SerializeField] private SwipeController swipeCon;
+    [SerializeField] private Player player;
 
-    public Player player;
+    public Player GetPlayer { get => player; }
 
-    /// <summary>
-    /// ui элементы
-    /// </summary>
-    [SerializeField]
-    GameObject StartButton;
-    [SerializeField]
-    GameObject RulesImage;
+    private bool canSwipe = true;
 
-    public ScoreController scoreCon;
-
-    private void Start()
+    public void SwipeStart(SwipeDirection direction)
     {
-        if (cameraCon == null)
-            cameraCon = FindObjectOfType<CameraController>();
-        if (scoreCon == null)
-            scoreCon = FindObjectOfType<ScoreController>();
-
-        scoreCon.NowLevel = nowLevel;
+        if (canSwipe)
+        {
+            canSwipe = false;
+            player.SetDirection(direction);
+        }
     }
     
     public void StartLevel()
     {
-        StartCoroutine(cameraCon.CoCameraStartPos());
-        StartButton.SetActive(false);
-        RulesImage.SetActive(false);
+        //StartCoroutine(cameraCon.CoCameraStartPos());
+        //StartButton.SetActive(false);
+        //RulesImage.SetActive(false);
     }
 
-    public IEnumerator NextLevel()
-    {
-        yield return new WaitForSeconds(2f);
-
-        if (scoreCon == null)
-            scoreCon = FindObjectOfType<ScoreController>();
-        
-        SceneManager.LoadScene(scoreCon.NowLevel + 1);
-    }
-
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(scoreCon.NowLevel);
-    }
-
-    public void LoadMenu()
-    {
-        Destroy(FindObjectOfType<SoundController>().gameObject);
-        SceneManager.LoadScene(0);
-    }
 }

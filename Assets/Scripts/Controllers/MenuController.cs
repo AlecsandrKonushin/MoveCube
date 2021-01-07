@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -20,13 +18,7 @@ public class MenuController : MonoBehaviour
 
     public void LoadLevel()
     {
-        Debug.Log(ScoreController.maxLevel);
-        SceneManager.LoadScene(ScoreController.maxLevel);
-    }
-
-    private void Start()
-    {
-        textLevel.text = "уровень : " + ScoreController.maxLevel;
+        //SceneManager.LoadScene(ScoreController.maxLevel);
     }
 
     public void CloseApp()

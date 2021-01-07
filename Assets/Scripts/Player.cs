@@ -4,61 +4,15 @@ using UnityEngine;
 
 public class Player : ColorController
 {
-    #region Компоненты лежащие на Player
-    private Transform myTransform;
     private Rigidbody2D rigid;
     private SpriteRenderer spriteRen;
-    private BoxCollider2D myBoxCol;
-    #endregion
 
-    #region Bool переменные движения
-    [SerializeField]
-    public bool canMoveRight;
-    [SerializeField]
-    public bool canMoveleft;
-    [SerializeField]
-    public bool canMoveup;
-    [SerializeField]
-    public bool canMovedown;
-
-    private bool verticalSwipe = false;
-    #endregion
-
-    [SerializeField]
-    private Transform startPos;
-    [SerializeField]
     private Vector3 newPos;
-    private Vector3 NewPos
-    {
-        set
-        {
-            canMove = true;
-            newPos = value;
-        }
-    }
-
-
-    [SerializeField]
     private float speed = 3;
-
     private bool canMove = false;
-    public bool CanMove
-    {
-        get { return canMove; }
-        set { canMove = value; }
-    }
 
     [SerializeField]
     private Sprite[] mySprites;
-
-    #region Ссылка на контроллеры
-    [SerializeField]
-    MainController mainCon;
-    [SerializeField]
-    SwipeController swipeCon;
-    [SerializeField]
-    SoundController soundCon;
-    #endregion
 
     [SerializeField]
     GameObject restartLVImage;
@@ -67,82 +21,46 @@ public class Player : ColorController
 
     private MoveObject objectTouch;
 
-    private string sideNow;
-
     void Start()
     {
-        myTransform = transform;
         rigid = GetComponent<Rigidbody2D>();
         spriteRen = GetComponent<SpriteRenderer>();
-        myBoxCol = GetComponent<BoxCollider2D>();
-        soundCon = FindObjectOfType<SoundController>();
-        if (startPos == null)
-            newPos = myTransform.position;
-        else
-            NewPos = startPos.position;
     }
 
     void Update()
     {
         if (canMove)
         {
-            myTransform.position = Vector3.MoveTowards(myTransform.position, newPos, speed * Time.deltaTime);
-        }
-        if (myTransform.position == newPos)
-        {
-            canMove = false;
+            transform.position = Vector3.MoveTowards(transform.position, newPos, speed * Time.deltaTime);
+
+            if (transform.position == newPos)
+                canMove = false;
         }
     }
 
-    // Определённые действия при движении в определённую сторону,
-    // включение колайдера в сторону движения,
-    // запрет на дальнейшее движение в эту же сторону
-    public void SetDirectionPlayer(string direction)
+    public void SetDirection(SwipeDirection direction)
     {
-        SideMoveTrue();
-
         switch (direction)
         {
-            case "right":
+            case SwipeDirection.Up:
                 myColliders[0].SetActive(true);
-                NewPos = new Vector3(myTransform.position.x + 100, myTransform.position.y, myTransform.position.z);
-                verticalSwipe = false;
-                canMoveRight = false;
-                sideNow = "right";
+                newPos = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
                 break;
-            case "left":
-                myColliders[2].SetActive(true);
-                NewPos = new Vector3(myTransform.position.x - 100, myTransform.position.y, myTransform.position.z);
-                verticalSwipe = false;
-                canMoveleft = false;
-                sideNow = "left";
-                break;
-            case "up":
-                myColliders[3].SetActive(true);
-                NewPos = new Vector3(myTransform.position.x, myTransform.position.y + 100, myTransform.position.z);
-                verticalSwipe = true;
-                canMoveup = false;
-                sideNow = "up";
-                break;
-            case "down":
+            case SwipeDirection.Right:
                 myColliders[1].SetActive(true);
-                NewPos = new Vector3(myTransform.position.x, myTransform.position.y - 100, myTransform.position.z);
-                verticalSwipe = true;
-                canMovedown = false;
-                sideNow = "down";
+                newPos = new Vector3(transform.position.x + 100, transform.position.y, transform.position.z);
+                break;
+            case SwipeDirection.Down:
+                myColliders[2].SetActive(true);
+                newPos = new Vector3(transform.position.x, transform.position.y - 100, transform.position.z);
+                break;
+            case SwipeDirection.Left:
+                myColliders[3].SetActive(true);
+                newPos = new Vector3(transform.position.x - 100, transform.position.y, transform.position.z);
                 break;
         }
 
-        WallAway();
-    }
-
-    // Разрешение движения в любую сторону.
-    private void SideMoveTrue()
-    {
-        canMoveleft = true;
-        canMoveRight = true;
-        canMoveup = true;
-        canMovedown = true;
+        canMove = true;
     }
 
     // Столкновение с каким-либо объектом.
@@ -167,7 +85,7 @@ public class Player : ColorController
             newPos.x = collision.transform.position.x;
             newPos.y = collision.transform.position.y;
 
-            SideMoveTrue();
+            //SideMoveTrue();
 
             DeEnableMyColliders();
         }
@@ -177,11 +95,12 @@ public class Player : ColorController
 
             if (butArrow != null)
             {
-                if (butArrow == sideNow)
-                    ContactQuest(collision);
-                else
-                    return;
-            }else
+                //if (butArrow == sideNow)
+                //    ContactQuest(collision);
+                //else
+                //    return;
+            }
+            else
                 ContactQuest(collision);
         }
     }
@@ -194,12 +113,12 @@ public class Player : ColorController
         // Если стена - портал.
         if (wall.IsPortal)
         {
-            if (sideNow == wall.sideIn)
-            {
-                ContactWallPortal(wall);
+            //if (sideNow == wall.sideIn)
+            //{
+            //    ContactWallPortal(wall);
 
-                return;
-            }
+            //    return;
+            //}
         }
         // Если стена двигается.
         if (wall.IMove)
@@ -218,20 +137,20 @@ public class Player : ColorController
         {
             DeEnableMyColliders();
 
-            soundCon.PlaySound("restart");
+            //soundCon.PlaySound("restart");
             StartCoroutine(RestartLevel());
         }
         // Если цвет Player не равен цвету стены, то он останавливается рядом с ней.
         if (MyColor != wall.MyColor)
         {
-            if (!canMoveleft)
-                newPos.x = wall.transform.position.x + 2;
-            else if (!canMoveRight)
-                newPos.x = wall.transform.position.x - 2;
-            else if (!canMoveup)
-                newPos.y = wall.transform.position.y - 2;
-            else if (!canMovedown)
-                newPos.y = wall.transform.position.y + 2;
+            //if (!canMoveleft)
+            //    newPos.x = wall.transform.position.x + 2;
+            //else if (!canMoveRight)
+            //    newPos.x = wall.transform.position.x - 2;
+            //else if (!canMoveup)
+            //    newPos.y = wall.transform.position.y - 2;
+            //else if (!canMovedown)
+            //    newPos.y = wall.transform.position.y + 2;
 
             // Отключаются колайдеры Player.
             DeEnableMyColliders();
@@ -242,37 +161,37 @@ public class Player : ColorController
     // Player доходит до стены.
     private void ContactWallPortal(Wall wall)
     {
-        if (sideNow == wall.sideIn)
-        {
-            DeEnableMyColliders();
+        //if (sideNow == wall.sideIn)
+        //{
+        //    DeEnableMyColliders();
 
-            soundCon.PlaySound("portal");
+        //    soundCon.PlaySound("portal");
 
-            Vector3 exitPos = wall.ExitPortal.transform.position;
+        //    Vector3 exitPos = wall.ExitPortal.transform.position;
 
-            if (wall.sideOut == "right")
-            {
-                myTransform.position = new Vector3(exitPos.x + 2, exitPos.y);
-                SetDirectionPlayer("right");
-            }
-            else if (wall.sideOut == "left")
-            {
-                myTransform.position = new Vector3(exitPos.x - 2, exitPos.y);
-                SetDirectionPlayer("left");
-            }
-            else if (wall.sideOut == "up")
-            {
-                myTransform.position = new Vector3(exitPos.x, exitPos.y + 2);
-                SetDirectionPlayer("up");
-            }
-            else if (wall.sideOut == "down")
-            {
-                myTransform.position = new Vector3(exitPos.x, exitPos.y - 2);
-                SetDirectionPlayer("down");
-            }
+        //    if (wall.sideOut == "right")
+        //    {
+        //        myTransform.position = new Vector3(exitPos.x + 2, exitPos.y);
+        //        SetDirectionPlayer("right");
+        //    }
+        //    else if (wall.sideOut == "left")
+        //    {
+        //        myTransform.position = new Vector3(exitPos.x - 2, exitPos.y);
+        //        SetDirectionPlayer("left");
+        //    }
+        //    else if (wall.sideOut == "up")
+        //    {
+        //        myTransform.position = new Vector3(exitPos.x, exitPos.y + 2);
+        //        SetDirectionPlayer("up");
+        //    }
+        //    else if (wall.sideOut == "down")
+        //    {
+        //        myTransform.position = new Vector3(exitPos.x, exitPos.y - 2);
+        //        SetDirectionPlayer("down");
+        //    }
 
-            return;
-        }
+        //    return;
+        //}
     }
 
     // Контакт с коином.
@@ -283,14 +202,14 @@ public class Player : ColorController
         newPos.x = collision.transform.position.x;
         newPos.y = collision.transform.position.y;
 
-        soundCon.PlaySound("coin");
+        //soundCon.PlaySound("coin");
 
-        swipeCon.canSwipe = false;
+        //swipeCon.canSwipe = false;
 
         DeEnableMyColliders();
 
         Destroy(collision.gameObject);
-        StartCoroutine(mainCon.NextLevel());
+        //StartCoroutine(mainCon.NextLevel());
     }
 
     // Контакт с квестом.
@@ -301,14 +220,14 @@ public class Player : ColorController
         newPos.x = collision.transform.position.x;
         newPos.y = collision.transform.position.y;
 
-        if (!canMoveleft)
-            newPos.x = collision.transform.position.x + 1.3f;
-        else if (!canMoveRight)
-            newPos.x = collision.transform.position.x - 1.3f;
-        else if (!canMoveup)
-            newPos.y = collision.transform.position.y - 1.3f;
-        else if (!canMovedown)
-            newPos.y = collision.transform.position.y + 1.3f;
+        //if (!canMoveleft)
+        //    newPos.x = collision.transform.position.x + 1.3f;
+        //else if (!canMoveRight)
+        //    newPos.x = collision.transform.position.x - 1.3f;
+        //else if (!canMoveup)
+        //    newPos.y = collision.transform.position.y - 1.3f;
+        //else if (!canMovedown)
+        //    newPos.y = collision.transform.position.y + 1.3f;
 
         DeEnableMyColliders();
 
@@ -321,7 +240,7 @@ public class Player : ColorController
     {
         if (colorObj.MyColor != MyColor)
         {
-            soundCon.PlaySound("change");
+            //soundCon.PlaySound("change");
 
             MyColor = colorObj.MyColor;
 
@@ -354,7 +273,7 @@ public class Player : ColorController
 
         yield return new WaitForSeconds(.1f);
 
-        mainCon.RestartLevel();
+        //mainCon.RestartLevel();
     }
 
     public void PauseApp(bool pause)
@@ -362,18 +281,12 @@ public class Player : ColorController
         if (pause)
         {
             canMove = false;
-            swipeCon.canSwipe = false;
+            //swipeCon.canSwipe = false;
         }
         else
         {
             canMove = true;
-            swipeCon.canSwipe = true;
+            //swipeCon.canSwipe = true;
         }
-    }
-
-    private void WallAway()
-    {
-        if (objectTouch != null)
-            objectTouch.canMove = true;
     }
 }

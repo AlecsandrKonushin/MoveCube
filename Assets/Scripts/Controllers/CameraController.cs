@@ -51,7 +51,6 @@ public class CameraController : MonoBehaviour
         }
 
         buttonPause.SetActive(true);
-        swipeCon.canSwipe = true;
     }
 
 }
