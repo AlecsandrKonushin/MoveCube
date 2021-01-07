@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ColorController : MonoBehaviour
+public class ColorObject : MonoBehaviour
 {
-    [SerializeField]
-    private AllColor myColor;
+    [SerializeField] protected AllColor myColor;
+
     public AllColor MyColor
     {
         get { return myColor; }

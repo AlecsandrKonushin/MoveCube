@@ -17,7 +17,17 @@ public class MainController : Singleton<MainController>
             player.SetDirection(direction);
         }
     }
-    
+
+    public void PlayerDeath()
+    {
+        Debug.LogError("Restart level");
+    }
+
+    public void PlayerWinLevel()
+    {
+        Debug.LogError("Win level");
+    }
+
     public void StartLevel()
     {
         //StartCoroutine(cameraCon.CoCameraStartPos());

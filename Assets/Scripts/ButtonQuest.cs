@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonQuest : ColorController
+public class ButtonQuest : ColorObject
 {
     // Спрайт активированной кнопки (нажатой)
     [SerializeField] protected Sprite spriteActivate;
 
     // Будет ли меняться цвет и у каких стен
     [SerializeField] protected bool changeColor;
-    [SerializeField] protected Wall[] wallsChange;
+    [SerializeField] protected Block[] wallsChange;
 
     // Цвет на который будет меняться
     [SerializeField] protected AllColor colorChange;
@@ -56,7 +56,7 @@ public class ButtonQuest : ColorController
         {
             wallsChange[i].MyColor = colorChange;
             wallsChange[i].gameObject.tag = tageChange;
-            wallsChange[i].SpriteRen.sprite = spriteChange;
+            //wallsChange[i].SpriteRen.sprite = spriteChange;
         }
     }
 
