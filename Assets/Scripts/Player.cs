@@ -81,39 +81,6 @@ public class Player : ColorObject
             ContactWithChangeColor();
         else if (collision.transform.tag == "portal")
             ContactWithPortal();
-        //else if (collision.transform.tag == "coinGold")
-        //{
-        //    ContactCoin(collision);
-        //}
-        //else if (collision.transform.tag == "colorChange")
-        //{
-        //    ColorController colorObj = collision.GetComponent<ColorController>();
-
-        //    ChangeMyColor(colorObj);
-        //}
-        //else if (collision.transform.tag == "stop")
-        //{
-        //    newPos.x = collision.transform.position.x;
-        //    newPos.y = collision.transform.position.y;
-
-        //    //SideMoveTrue();
-
-        //    DeEnableMyColliders();
-        //}
-        //else if (collision.transform.tag == "quest")
-        //{
-        //    string butArrow = collision.GetComponent<ButtonQuest>().MyArrow;
-
-        //    if (butArrow != null)
-        //    {
-        //        //if (butArrow == sideNow)
-        //        //    ContactQuest(collision);
-        //        //else
-        //        //    return;
-        //    }
-        //    else
-        //        ContactQuest(collision);
-        //}
     }
 
     private void ContactWithBlock()

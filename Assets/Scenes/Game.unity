@@ -1539,7 +1539,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 5.22, y: 5.22}
+    newSize: {x: 1.84, y: 1.84}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1560,7 +1560,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myColor: 0
-  mySprites: []
+  mySprites:
+  - {fileID: 21300000, guid: 22f780bc90bafc640b42c5fa79ff45ae, type: 3}
+  - {fileID: 21300000, guid: 1f8be1238123dac4b96c385e27f72d3c, type: 3}
+  - {fileID: 21300000, guid: a2d942fd200709c478984c6eabfff302, type: 3}
+  - {fileID: 21300000, guid: 86a548ba69cdc8e4fb7f3becc8e1c1a5, type: 3}
   myColliders:
   - {fileID: 1651895057}
   - {fileID: 1905430507}
@@ -1605,12 +1609,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 0b90bdd3e8636c142bb213f828930aed, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 22f780bc90bafc640b42c5fa79ff45ae, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.22, y: 5.22}
+  m_Size: {x: 1.84, y: 1.84}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
