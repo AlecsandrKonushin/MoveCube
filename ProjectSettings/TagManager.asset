@@ -10,6 +10,7 @@ TagManager:
   - player
   - block
   - exit
+  - door
   layers:
   - Default
   - TransparentFX
