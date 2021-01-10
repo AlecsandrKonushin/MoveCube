@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1772361727746563221}
   - component: {fileID: 1772361727746563220}
   m_Layer: 0
-  m_Name: Block double blue hor
+  m_Name: Block double green hor
   m_TagString: block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: ab9b6f707a35451448c69438abacfbaf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8594bdfc0d7f5484f9ead9091b83cdc7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -121,4 +121,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0bd2289a53ca848959fdb10667c84f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myColor: 2
+  myColor: 0

@@ -17,8 +17,8 @@ public class ColorObject : MonoBehaviour
     {
         green,
         yellow,
-        blue,
-        red,
-        white
+        blue,        
+        pink,
+        red
     }
 }
