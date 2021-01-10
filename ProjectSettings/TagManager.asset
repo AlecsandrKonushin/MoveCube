@@ -5,12 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - wall
-  - coinGrey
-  - coinGold
   - colorChange
-  - stop
   - quest
   - player
+  - block
+  - exit
   layers:
   - Default
   - TransparentFX

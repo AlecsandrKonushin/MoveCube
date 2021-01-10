@@ -28,9 +28,6 @@ public class SoundController : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         audioSourceMusic = GetComponent<AudioSource>();
-
-        audioSourceObject = FindObjectOfType<CameraController>().GetComponent<AudioSource>();
-
     }
 
     private void Update()
@@ -51,8 +48,6 @@ public class SoundController : MonoBehaviour
     {
         if (audioSourceObject == null)
         {
-            CameraController camera = FindObjectOfType<CameraController>();
-            audioSourceObject = camera.GetComponent<AudioSource>();
         }
 
         if (objectSound == "button")
