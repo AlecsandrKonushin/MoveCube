@@ -46,15 +46,8 @@ public class PlayerContacts : MonoBehaviour
 
         if (door.ExitDoor)
         {
-            player.AfterMove += ContactWithExit;
+            MainController.Instance.IsWinLevel = true;
         }
-    }
-
-    private void ContactWithExit()
-    {
-        player.AfterMove -= ContactWithExit;
-
-        MainController.Instance.PlayerWinLevel();
     }
 
     private void ContactWithWall()
@@ -68,7 +61,7 @@ public class PlayerContacts : MonoBehaviour
 
         if (colorObj.MyColor != player.MyColor)
         {
-            player.SetNewColor(colorObj.MyColor);            
+            player.SetNewColor(colorObj.MyColor);
 
             Destroy(colorObj.gameObject, .3f);
         }

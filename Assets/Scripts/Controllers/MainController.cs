@@ -2,11 +2,15 @@
 
 public class MainController : Singleton<MainController>
 {
-    [SerializeField] private Player player;
+    public delegate void Move();
+    public event Move AfterMove;
 
+    [SerializeField] private Player player;
     public Player GetPlayer { get => player; }
 
     private bool canSwipe = true;
+    private bool isWinLevel = false;
+    public bool IsWinLevel { set => isWinLevel = value; }
 
     public void SwipeStart(SwipeDirection direction)
     {
@@ -19,7 +23,10 @@ public class MainController : Singleton<MainController>
 
     public void PlayerEndMove()
     {
-        canSwipe = true;
+        if (isWinLevel)
+            WinLevel();
+        else
+            canSwipe = true;
     }
 
     public void PlayerDeath()
@@ -27,9 +34,9 @@ public class MainController : Singleton<MainController>
         Debug.LogError("Restart level");
     }
 
-    public void PlayerWinLevel()
+    private void WinLevel()
     {
-        Debug.LogError("Win level");
+        UiController.Instance.ShowWinPanel();
     }
 
     public void StartLevel()

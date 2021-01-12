@@ -3,9 +3,6 @@
 [RequireComponent(typeof(PlayerContacts))]
 public class Player : ColorObject
 {
-    public delegate void Move();
-    public event Move AfterMove;   
-
     [SerializeField] private float speed = 3;
     [SerializeField] private Sprite[] mySprites;
     [SerializeField] private GameObject[] myColliders;
@@ -19,12 +16,12 @@ public class Player : ColorObject
     private const float offsetBlock = 1f;
     private const float offsetswipe = 20f;
 
-    void Start()
+    private void Start()
     {
         spriteRen = GetComponent<SpriteRenderer>();
     }
 
-    void Update()
+    private void Update()
     {
         if (canMove)
         {
@@ -32,10 +29,15 @@ public class Player : ColorObject
 
             if (transform.position == newPos)
             {
-                canMove = false;
-                MainController.Instance.PlayerEndMove();
+                EndMove();
             }
         }
+    }
+
+    private void EndMove()
+    {
+        canMove = false;
+        MainController.Instance.PlayerEndMove();
     }
 
     public void SetNewPosition(SwipeDirection direction)
@@ -63,7 +65,7 @@ public class Player : ColorObject
         }
 
         canMove = true;
-    }   
+    }
 
     public void SetNewPosition(Vector2 objectPos, bool offset = true)
     {
