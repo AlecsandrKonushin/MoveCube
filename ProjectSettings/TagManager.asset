@@ -6,10 +6,8 @@ TagManager:
   tags:
   - wall
   - colorChange
-  - quest
   - player
   - block
-  - exit
   - door
   layers:
   - Default

@@ -1,24 +1,20 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(PlayerContacts))]
 public class Player : ColorObject
 {
-    //private Rigidbody2D rigid;
-    private SpriteRenderer spriteRen;
+    public delegate void Move();
+    public event Move AfterMove;   
 
-    private Vector3 newPos;
-    private float speed = 3;
-    private bool canMove = false;
-
+    [SerializeField] private float speed = 3;
     [SerializeField] private Sprite[] mySprites;
-
-    //[SerializeField]
-    //GameObject restartLVImage;
-
     [SerializeField] private GameObject[] myColliders;
 
-    //private MoveObject objectTouch;
+    private SpriteRenderer spriteRen;
 
-    private GameObject collisionObject;
+    private bool canMove = false;
+    private Vector3 newPos;
+
     private SwipeDirection directionMove;
     private const float offsetBlock = 1f;
     private const float offsetswipe = 20f;
@@ -35,11 +31,14 @@ public class Player : ColorObject
             transform.position = Vector3.MoveTowards(transform.position, newPos, speed * Time.deltaTime);
 
             if (transform.position == newPos)
+            {
                 canMove = false;
+                MainController.Instance.PlayerEndMove();
+            }
         }
     }
 
-    public void SetDirection(SwipeDirection direction)
+    public void SetNewPosition(SwipeDirection direction)
     {
         directionMove = direction;
 
@@ -64,45 +63,26 @@ public class Player : ColorObject
         }
 
         canMove = true;
-    }
+    }   
 
-    // Столкновение с каким-либо объектом.
-    public void CollisionWithObjext(GameObject collision)
+    public void SetNewPosition(Vector2 objectPos, bool offset = true)
     {
-        collisionObject = collision;
+        newPos = objectPos;
 
-        if (collision.transform.tag == "block")
-            ContactWithBlock();
-        else if (collision.transform.tag == "wall")
-            ContactWithWall();
-        else if (collision.transform.tag == "exit")
-            ContactWithExit();
-        else if (collision.transform.tag == "colorChange")
-            ContactWithChangeColor();
-        else if (collision.transform.tag == "portal")
-            ContactWithPortal();
-    }
-
-    private void ContactWithBlock()
-    {
-        Block block = collisionObject.GetComponent<Block>();
-
-        if (myColor != block.MyColor)
+        if (offset)
         {
             if (directionMove == SwipeDirection.Up)
-                newPos.y = block.transform.position.y - offsetBlock;
+                newPos.y -= 1;
             else if (directionMove == SwipeDirection.Right)
-                newPos.x = block.transform.position.x - offsetBlock;
+                newPos.x -= 1;
             else if (directionMove == SwipeDirection.Down)
-                newPos.y = block.transform.position.y + offsetBlock;
+                newPos.y += 1;
             else if (directionMove == SwipeDirection.Left)
-                newPos.x = block.transform.position.x + offsetBlock;
-
-            DeEnableMyColliders();
+                newPos.x += 1;
         }
     }
 
-    private void DeEnableMyColliders()
+    public void DeEnableMyColliders()
     {
         foreach (var collider in myColliders)
         {
@@ -110,76 +90,18 @@ public class Player : ColorObject
         }
     }
 
-    private void ContactWithExit()
+    public void SetNewColor(AllColor color)
     {
-        MainController.Instance.PlayerWinLevel();
-        GetComponent<Animator>().SetTrigger("hide");
-    }
+        MyColor = color;
 
-    private void ContactWithWall()
-    {
-        MainController.Instance.PlayerDeath();
-    }
-
-    private void ContactWithChangeColor()
-    {
-        ColorObject colorObj = collisionObject.GetComponent<ColorObject>();
-
-        if (colorObj.MyColor != MyColor)
-        {
-            MyColor = colorObj.MyColor;
-
-            if (MyColor == AllColor.green)
-                spriteRen.sprite = mySprites[0];
-            else if (MyColor == AllColor.yellow)
-                spriteRen.sprite = mySprites[1];
-            else if (MyColor == AllColor.blue)
-                spriteRen.sprite = mySprites[2];
-            else if (MyColor == AllColor.red)
-                spriteRen.sprite = mySprites[3];
-
-            Destroy(colorObj.gameObject, .3f);
-        }
-    }
-
-    private void ContactWithPortal()
-    {
-
-    }
-
-    private void ContactWallPortal(Block wall)
-    {
-        //if (sideNow == wall.sideIn)
-        //{
-        //    DeEnableMyColliders();
-
-        //    soundCon.PlaySound("portal");
-
-        //    Vector3 exitPos = wall.ExitPortal.transform.position;
-
-        //    if (wall.sideOut == "right")
-        //    {
-        //        myTransform.position = new Vector3(exitPos.x + 2, exitPos.y);
-        //        SetDirectionPlayer("right");
-        //    }
-        //    else if (wall.sideOut == "left")
-        //    {
-        //        myTransform.position = new Vector3(exitPos.x - 2, exitPos.y);
-        //        SetDirectionPlayer("left");
-        //    }
-        //    else if (wall.sideOut == "up")
-        //    {
-        //        myTransform.position = new Vector3(exitPos.x, exitPos.y + 2);
-        //        SetDirectionPlayer("up");
-        //    }
-        //    else if (wall.sideOut == "down")
-        //    {
-        //        myTransform.position = new Vector3(exitPos.x, exitPos.y - 2);
-        //        SetDirectionPlayer("down");
-        //    }
-
-        //    return;
-        //}
+        if (MyColor == AllColor.green)
+            spriteRen.sprite = mySprites[0];
+        else if (MyColor == AllColor.yellow)
+            spriteRen.sprite = mySprites[1];
+        else if (MyColor == AllColor.blue)
+            spriteRen.sprite = mySprites[2];
+        else if (MyColor == AllColor.red)
+            spriteRen.sprite = mySprites[3];
     }
 
     //// Контакт с коином.

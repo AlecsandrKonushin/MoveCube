@@ -2,7 +2,6 @@
 
 public class MainController : Singleton<MainController>
 {
-    [SerializeField] private SwipeController swipeCon;
     [SerializeField] private Player player;
 
     public Player GetPlayer { get => player; }
@@ -14,8 +13,13 @@ public class MainController : Singleton<MainController>
         if (canSwipe)
         {
             canSwipe = false;
-            player.SetDirection(direction);
+            player.SetNewPosition(direction);
         }
+    }
+
+    public void PlayerEndMove()
+    {
+        canSwipe = true;
     }
 
     public void PlayerDeath()
