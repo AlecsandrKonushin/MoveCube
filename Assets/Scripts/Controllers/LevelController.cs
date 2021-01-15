@@ -1,25 +1,17 @@
 ﻿using UnityEngine;
 
-public class LevelController : MonoBehaviour
+public class LevelController : Singleton<LevelController>
 {
-    private int nowLevel;
+    [SerializeField] private LevelPrefab[] prefablevels;
+    [SerializeField] private Vector2 spawnLevelPos;
 
-    public void NextLevel()
+    private int currentLevelNumber = 0;
+
+    private LevelPrefab currentLevel;
+    public LevelPrefab CurrrentLevel { get => currentLevel; }
+
+    public void CreateCurrentLevel()
     {
-        //if (scoreCon == null)
-        //    scoreCon = FindObjectOfType<ScoreController>();
-
-        //SceneManager.LoadScene(scoreCon.NowLevel + 1);
-    }
-
-    public void RestartLevel()
-    {
-        //SceneManager.LoadScene(scoreCon.NowLevel);
-    }
-
-    public void LoadMenu()
-    {
-        //Destroy(FindObjectOfType<SoundController>().gameObject);
-        //SceneManager.LoadScene(0);
+        currentLevel = Instantiate(prefablevels[currentLevelNumber], spawnLevelPos, Quaternion.identity);
     }
 }

@@ -5,12 +5,22 @@ public class MainController : Singleton<MainController>
     public delegate void Move();
     public event Move AfterMove;
 
-    [SerializeField] private Player player;
-    public Player GetPlayer { get => player; }
+    [SerializeField] private Player playerPrefab;
+
+    private Player player;
 
     private bool canSwipe = true;
     private bool isWinLevel = false;
+    private bool isLoseLevel = false;
+
     public bool IsWinLevel { set => isWinLevel = value; }
+    public bool IsLoseLevel { set => isLoseLevel = value; }
+
+    private void Start()
+    {
+        LevelController.Instance.CreateCurrentLevel();
+        player = Instantiate(playerPrefab, )
+    }
 
     public void SwipeStart(SwipeDirection direction)
     {
@@ -25,13 +35,16 @@ public class MainController : Singleton<MainController>
     {
         if (isWinLevel)
             WinLevel();
+        else if (isLoseLevel)
+            LoseLevel();
         else
             canSwipe = true;
     }
 
-    public void PlayerDeath()
+    public void LoseLevel()
     {
-        Debug.LogError("Restart level");
+        player.DestroyPlayer();
+        UiController.Instance.ShowLosePanel();
     }
 
     private void WinLevel()

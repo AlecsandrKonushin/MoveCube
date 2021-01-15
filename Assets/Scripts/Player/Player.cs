@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(PlayerContacts))]
 public class Player : ColorObject
@@ -8,7 +9,9 @@ public class Player : ColorObject
     [SerializeField] private GameObject[] myColliders;
 
     private SpriteRenderer spriteRen;
+    private Animator animator;
 
+    private bool fall = false;
     private bool canMove = false;
     private Vector3 newPos;
 
@@ -19,6 +22,7 @@ public class Player : ColorObject
     private void Start()
     {
         spriteRen = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -36,7 +40,21 @@ public class Player : ColorObject
 
     private void EndMove()
     {
-        canMove = false;
+        if (fall)
+        {
+            return;
+        }
+        else
+        {
+            canMove = false;
+            MainController.Instance.PlayerEndMove();
+        }
+    }
+
+    private IEnumerator CoFallPlayer()
+    {
+        PlayAnimation(PlayerAnim.Fall);
+        yield return new WaitForSeconds(1.5f);
         MainController.Instance.PlayerEndMove();
     }
 
@@ -69,19 +87,40 @@ public class Player : ColorObject
 
     public void SetNewPosition(Vector2 objectPos, bool offset = true)
     {
-        newPos = objectPos;
+        Vector2 position = objectPos;
 
         if (offset)
         {
             if (directionMove == SwipeDirection.Up)
-                newPos.y -= 1;
+                position.y -= 1;
             else if (directionMove == SwipeDirection.Right)
-                newPos.x -= 1;
+                position.x -= 1;
             else if (directionMove == SwipeDirection.Down)
-                newPos.y += 1;
+                position.y += 1;
             else if (directionMove == SwipeDirection.Left)
-                newPos.x += 1;
+                position.x += 1;
         }
+
+        newPos = position;
+    }
+
+    public void SetPositionBeforeWall(Vector2 wallPos)
+    {
+        Vector2 position = transform.position;
+
+        if (directionMove == SwipeDirection.Up)
+            position.y = wallPos.y - 1;
+        else if (directionMove == SwipeDirection.Right)
+            position.x = wallPos.x - 1;
+        else if (directionMove == SwipeDirection.Down)
+            position.y = wallPos.y + 1;
+        else if (directionMove == SwipeDirection.Left)
+            position.x = wallPos.x + 1;
+
+        newPos = position;
+        fall = true;
+
+        StartCoroutine(CoFallPlayer());
     }
 
     public void DeEnableMyColliders()
@@ -105,6 +144,33 @@ public class Player : ColorObject
         else if (MyColor == AllColor.red)
             spriteRen.sprite = mySprites[3];
     }
+
+    public void PlayAnimation(PlayerAnim anim)
+    {
+        animator.SetTrigger(anim.ToString());
+    }
+
+    public void DestroyPlayer()
+    {
+        Destroy(gameObject);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //// Контакт с коином.
     //// Player становится на позицию коина, 
@@ -147,4 +213,9 @@ public class Player : ColorObject
     //    collision.GetComponent<ButtonQuest>().enabled = false;
     //}
 
+}
+
+public enum PlayerAnim
+{
+    Fall
 }

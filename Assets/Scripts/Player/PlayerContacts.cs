@@ -52,7 +52,8 @@ public class PlayerContacts : MonoBehaviour
 
     private void ContactWithWall()
     {
-        MainController.Instance.PlayerDeath();
+        MainController.Instance.IsLoseLevel = true;
+        player.SetPositionBeforeWall(collisionObject.transform.position);
     }
 
     private void ContactWithChangeColor()
