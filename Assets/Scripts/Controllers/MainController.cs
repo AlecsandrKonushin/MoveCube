@@ -9,7 +9,7 @@ public class MainController : Singleton<MainController>
 
     private Player player;
 
-    private bool canSwipe = true;
+    private bool canSwipe = false;
     private bool isWinLevel = false;
     private bool isLoseLevel = false;
 
@@ -19,7 +19,10 @@ public class MainController : Singleton<MainController>
     private void Start()
     {
         LevelController.Instance.CreateCurrentLevel();
-        player = Instantiate(playerPrefab, )
+
+        player = Instantiate(playerPrefab, LevelController.Instance.CurrrentLevel.GetStartPlayerPos, Quaternion.identity);
+        UiController.Instance.HideBlackoutPanel();
+        canSwipe = true;
     }
 
     public void SwipeStart(SwipeDirection direction)

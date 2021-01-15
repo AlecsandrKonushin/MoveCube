@@ -12,6 +12,7 @@ public class PlayerContacts : MonoBehaviour
 
     public void CollisionWithObjext(GameObject collision)
     {
+        Debug.Log("collision");
         collisionObject = collision;
 
         if (collision.transform.tag == "block")
