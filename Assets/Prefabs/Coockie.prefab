@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 5485800386033421554}
   - component: {fileID: 5567113329297597429}
   m_Layer: 0
-  m_Name: Door
-  m_TagString: block
+  m_Name: Coockie
+  m_TagString: door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,7 +100,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.92, y: 0.92}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.92444444, y: 0.92444444}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
