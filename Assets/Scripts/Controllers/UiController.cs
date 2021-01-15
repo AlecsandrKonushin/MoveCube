@@ -20,11 +20,6 @@ public class UiController : Singleton<UiController>
         blackoutPanel.SetActive(false);
     }
 
-    public void ShowBlackoutPanel()
-    {
-        blackoutPanel.SetActive(true);
-    }
-
     public void ShowWinPanel()
     {
         panelWin.SetActive(true);
@@ -33,5 +28,20 @@ public class UiController : Singleton<UiController>
     public void ShowLosePanel()
     {
         panelLose.SetActive(true);
+    }
+
+    public void ClickRestartLevel()
+    {
+        StartCoroutine(CoClickRestartLevel());
+    }
+
+    private IEnumerator CoClickRestartLevel()
+    {
+        panelLose.SetActive(false);
+        blackoutPanel.SetActive(true);
+
+        yield return new WaitForSeconds(.5f);
+
+        MainController.Instance.RestartLevel();
     }
 }

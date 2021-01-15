@@ -18,9 +18,15 @@ public class MainController : Singleton<MainController>
 
     private void Start()
     {
+        CreateLevel();
+    }
+
+    private void CreateLevel()
+    {
         LevelController.Instance.CreateCurrentLevel();
 
         player = Instantiate(playerPrefab, LevelController.Instance.CurrrentLevel.GetStartPlayerPos, Quaternion.identity);
+
         UiController.Instance.HideBlackoutPanel();
         canSwipe = true;
     }
@@ -55,11 +61,12 @@ public class MainController : Singleton<MainController>
         UiController.Instance.ShowWinPanel();
     }
 
-    public void StartLevel()
+    public void RestartLevel()
     {
-        //StartCoroutine(cameraCon.CoCameraStartPos());
-        //StartButton.SetActive(false);
-        //RulesImage.SetActive(false);
+        isLoseLevel = false;
+
+        LevelController.Instance.RestartLevel();
+        CreateLevel();
     }
 
 }

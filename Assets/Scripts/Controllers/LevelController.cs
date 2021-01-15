@@ -14,4 +14,9 @@ public class LevelController : Singleton<LevelController>
     {
         currentLevel = Instantiate(prefablevels[currentLevelNumber], spawnLevelPos, Quaternion.identity);
     }
+
+    public void RestartLevel()
+    {
+        Destroy(currentLevel.gameObject);
+    }
 }
