@@ -65,7 +65,16 @@ public class MainController : Singleton<MainController>
     {
         isLoseLevel = false;
 
-        LevelController.Instance.RestartLevel();
+        LevelController.Instance.DestroyLevel();
+        CreateLevel();
+    }
+
+    public void NextLevel()
+    {
+        isWinLevel = false;
+        player.DestroyPlayer();
+
+        LevelController.Instance.NextLevel();
         CreateLevel();
     }
 

@@ -818,6 +818,7 @@ GameObject:
   - component: {fileID: 937899013}
   - component: {fileID: 937899015}
   - component: {fileID: 937899014}
+  - component: {fileID: 937899016}
   m_Layer: 5
   m_Name: Panel lose
   m_TagString: Untagged
@@ -883,6 +884,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 937899012}
   m_CullTransparentMesh: 0
+--- !u!95 &937899016
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937899012}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 10f31ef1d2e38c7439ed39551ba462cd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1046605261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,6 +1042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefablevels:
   - {fileID: 7604479982813972707, guid: 1196daf3d7925e0499be93662bb08a0c, type: 3}
+  - {fileID: 7604479982813972707, guid: 8dad015bb7db0714e9f7adc7d8c50ad3, type: 3}
   spawnLevelPos: {x: 0, y: 0}
 --- !u!1 &1119126515
 GameObject:
@@ -1628,7 +1649,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1775978541}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1478945503}
+        m_MethodName: ClickWinLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1775978541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1711,6 +1743,7 @@ GameObject:
   - component: {fileID: 1893346138}
   - component: {fileID: 1893346140}
   - component: {fileID: 1893346139}
+  - component: {fileID: 1893346141}
   m_Layer: 5
   m_Name: Panel win
   m_TagString: Untagged
@@ -1776,3 +1809,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893346137}
   m_CullTransparentMesh: 0
+--- !u!95 &1893346141
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893346137}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b31335b80e635334c8d754f60b3d98e4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

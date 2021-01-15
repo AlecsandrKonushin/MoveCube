@@ -20,11 +20,32 @@ public class UiController : Singleton<UiController>
         blackoutPanel.SetActive(false);
     }
 
+    #region Win level
     public void ShowWinPanel()
     {
         panelWin.SetActive(true);
     }
 
+    public void ClickWinLevel()
+    {
+        StartCoroutine(CoClickWinLevel());
+    }
+
+    private IEnumerator CoClickWinLevel()
+    {
+        panelWin.GetComponent<Animator>().SetTrigger("hide");
+        yield return new WaitForSeconds(.5f);
+
+        panelWin.SetActive(false);
+        blackoutPanel.SetActive(true);
+
+        yield return new WaitForSeconds(.5f);
+
+        MainController.Instance.NextLevel();
+    }
+    #endregion
+
+    #region Lose level
     public void ShowLosePanel()
     {
         panelLose.SetActive(true);
@@ -37,6 +58,9 @@ public class UiController : Singleton<UiController>
 
     private IEnumerator CoClickRestartLevel()
     {
+        panelLose.GetComponent<Animator>().SetTrigger("hide");
+        yield return new WaitForSeconds(.5f);
+
         panelLose.SetActive(false);
         blackoutPanel.SetActive(true);
 
@@ -44,4 +68,5 @@ public class UiController : Singleton<UiController>
 
         MainController.Instance.RestartLevel();
     }
+    #endregion
 }

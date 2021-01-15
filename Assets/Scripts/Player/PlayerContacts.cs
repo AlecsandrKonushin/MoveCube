@@ -19,7 +19,7 @@ public class PlayerContacts : MonoBehaviour
         else if (collision.transform.tag == "wall")
             ContactWithWall();
         else if (collision.transform.tag == "door")
-            ContactWithDoor();
+            ContactWithCoockie();
         else if (collision.transform.tag == "colorChange")
             ContactWithChangeColor();
         else if (collision.transform.tag == "portal")
@@ -33,21 +33,18 @@ public class PlayerContacts : MonoBehaviour
         if (player.MyColor != block.MyColor)
         {
             player.SetNewPosition(block.transform.position);
-
             player.DeEnableMyColliders();
         }
     }
 
-    private void ContactWithDoor()
+    private void ContactWithCoockie()
     {
-        Door door = collisionObject.GetComponent<Door>();
+        Coockie door = collisionObject.GetComponent<Coockie>();
 
         player.SetNewPosition(door.transform.position, false);
 
-        if (door.ExitDoor)
-        {
-            MainController.Instance.IsWinLevel = true;
-        }
+        MainController.Instance.IsWinLevel = true;
+        player.DeEnableMyColliders();
     }
 
     private void ContactWithWall()
