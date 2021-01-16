@@ -31,7 +31,7 @@ public class MainController : Singleton<MainController>
         canSwipe = true;
     }
 
-    public void SwipeStart(SwipeDirection direction)
+    public void SwipeStart(Direction direction)
     {
         if (canSwipe)
         {
@@ -52,7 +52,7 @@ public class MainController : Singleton<MainController>
 
     public void LoseLevel()
     {
-        player.DestroyPlayer();
+        player.DestroyCharacter();
         UiController.Instance.ShowLosePanel();
     }
 
@@ -72,7 +72,7 @@ public class MainController : Singleton<MainController>
     public void NextLevel()
     {
         isWinLevel = false;
-        player.DestroyPlayer();
+        player.DestroyCharacter();
 
         LevelController.Instance.NextLevel();
         CreateLevel();

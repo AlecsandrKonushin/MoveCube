@@ -22,22 +22,22 @@ public class SwipeController : MonoBehaviour
                 {
                     if ((lastPress.x > firstPress.x))
                     {
-                        MainController.Instance.SwipeStart(SwipeDirection.Right);
+                        MainController.Instance.SwipeStart(Direction.Right);
                     }
                     else
                     {
-                        MainController.Instance.SwipeStart(SwipeDirection.Left);
+                        MainController.Instance.SwipeStart(Direction.Left);
                     }
                 }
                 else
                 {
                     if (lastPress.y > firstPress.y)
                     {
-                        MainController.Instance.SwipeStart(SwipeDirection.Up);
+                        MainController.Instance.SwipeStart(Direction.Up);
                     }
                     else
                     {
-                        MainController.Instance.SwipeStart(SwipeDirection.Down);
+                        MainController.Instance.SwipeStart(Direction.Down);
                     }
                 }
             }
@@ -45,7 +45,7 @@ public class SwipeController : MonoBehaviour
     }
 }
 
-public enum SwipeDirection
+public enum Direction
 {
     Up,
     Right,
