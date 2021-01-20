@@ -8,7 +8,8 @@ TagManager:
   - colorChange
   - player
   - block
-  - door
+  - enemy
+  - coockie
   layers:
   - Default
   - TransparentFX

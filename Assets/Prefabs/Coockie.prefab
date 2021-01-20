@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5567113329297597429}
   m_Layer: 0
   m_Name: Coockie
-  m_TagString: door
+  m_TagString: coockie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

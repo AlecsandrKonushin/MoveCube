@@ -11,6 +11,6 @@ public class PlayerCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        contacts.CollisionWithObjext(collision.gameObject);
+        contacts.CollisionWithObjeсt(collision.gameObject);
     }
 }

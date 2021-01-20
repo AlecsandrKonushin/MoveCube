@@ -1,16 +1,23 @@
 ﻿using UnityEngine;
 
-public class PlayerContacts : MonoBehaviour
+/// <summary>
+/// Обработчик столкновений Player с другими объектами.
+/// </summary>
+public class PlayerContacts : CharacterContacts
 {
     private Player player;
-    private GameObject collisionObject;
 
     private void Start()
     {
         player = GetComponent<Player>();
     }
 
-    public void CollisionWithObjext(GameObject collision)
+    /// <summary>
+    /// Столкновение с объектом.
+    /// Объект определяется по тегу.
+    /// </summary>
+    /// <param name="collision"></param>
+    public override void CollisionWithObjeсt(GameObject collision)
     {
         collisionObject = collision;
 
@@ -18,7 +25,7 @@ public class PlayerContacts : MonoBehaviour
             ContactWithBlock();
         else if (collision.transform.tag == "wall")
             ContactWithWall();
-        else if (collision.transform.tag == "door")
+        else if (collision.transform.tag == "coockie")
             ContactWithCoockie();
         else if (collision.transform.tag == "colorChange")
             ContactWithChangeColor();
@@ -35,7 +42,7 @@ public class PlayerContacts : MonoBehaviour
         if (player.MyColor != block.MyColor)
         {
             player.SetNewPosition(block.transform.position);
-            player.DeEnableMyColliders();
+            DeEnableMyColliders();
         }
     }
 
@@ -46,13 +53,7 @@ public class PlayerContacts : MonoBehaviour
         player.SetNewPosition(coockie.transform.position, false);
 
         MainController.Instance.IsWinLevel = true;
-        player.DeEnableMyColliders();
-    }
-
-    private void ContactWithWall()
-    {
-        MainController.Instance.IsLoseLevel = true;
-        player.SetPositionBeforeWall(collisionObject.transform.position);
+        DeEnableMyColliders();
     }
 
     private void ContactWithChangeColor()
@@ -72,13 +73,26 @@ public class PlayerContacts : MonoBehaviour
 
     }
 
-    public void ContactWithEnemy()
+    private void ContactWithWall()
+    {
+        DeEnableMyColliders();
+
+        player.SetPositionBeforeWall(collisionObject.transform.position);
+    }
+
+    private void ContactWithEnemy()
     {
         Enemy enemy = collisionObject.GetComponent<Enemy>();
 
-        if(enemy.Type == TypeEnemy.Spike)
+        if (enemy.Type == TypeEnemy.Spike)
         {
+            player.SetNewPosition(enemy.transform.position, true);
+            DeEnableMyColliders();
 
+            if (player.GetDirectionMove == (enemy as SpikeEnemy).GetSpikeDirection)
+            {                
+                player.SpikeDamage = true;
+            }
         }
     }
 

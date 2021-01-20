@@ -10,11 +10,9 @@ public class MainController : Singleton<MainController>
     private Player player;
 
     private bool canSwipe = false;
-    private bool isWinLevel = false;
-    private bool isLoseLevel = false;
 
+    private bool isWinLevel = false;
     public bool IsWinLevel { set => isWinLevel = value; }
-    public bool IsLoseLevel { set => isLoseLevel = value; }
 
     private void Start()
     {
@@ -44,16 +42,19 @@ public class MainController : Singleton<MainController>
     {
         if (isWinLevel)
             WinLevel();
-        else if (isLoseLevel)
-            LoseLevel();
         else
             canSwipe = true;
     }
 
+    public void PlayerDeath()
+    {
+        LoseLevel();
+    }
+
     public void LoseLevel()
     {
-        player.DestroyCharacter();
         UiController.Instance.ShowLosePanel();
+        player.DestroyCharacter();
     }
 
     private void WinLevel()
@@ -63,8 +64,6 @@ public class MainController : Singleton<MainController>
 
     public void RestartLevel()
     {
-        isLoseLevel = false;
-
         LevelController.Instance.DestroyLevel();
         CreateLevel();
     }

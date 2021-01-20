@@ -240,11 +240,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myColor: 0
   speed: 8
-  myColliders:
-  - {fileID: 553418014001239433}
-  - {fileID: 553418014310003059}
-  - {fileID: 553418012616760501}
-  - {fileID: 553418012631172542}
   mySprites:
   - {fileID: 21300000, guid: 22f780bc90bafc640b42c5fa79ff45ae, type: 3}
   - {fileID: 21300000, guid: 1f8be1238123dac4b96c385e27f72d3c, type: 3}
@@ -262,6 +257,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cab9e221e7069442ac9d5a8ba0f91f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myColliders:
+  - {fileID: 553418014001239433}
+  - {fileID: 553418014310003059}
+  - {fileID: 553418012616760501}
+  - {fileID: 553418012631172542}
 --- !u!95 &1200072323346700871
 Animator:
   serializedVersion: 3

@@ -1,15 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(PlayerContacts))]
 public class Player : Character
 {
-    [SerializeField] private Sprite[] mySprites;      
+    [SerializeField] private Sprite[] mySprites;
+
+    private bool spikeDamage = false;
+    public bool SpikeDamage { set => spikeDamage = value; }
 
     protected override void EndMove()
     {
         if (fall)
         {
-            return;
+            Fall();
+        }
+        else if (spikeDamage)
+        {
+            Damage();
         }
         else
         {
@@ -30,6 +38,28 @@ public class Player : Character
             spriteRen.sprite = mySprites[2];
         else if (MyColor == AllColor.red)
             spriteRen.sprite = mySprites[3];
+    }
+
+    public void PlayAnimation(PlayerAnim anim)
+    {
+        animator.SetTrigger(anim.ToString());
+    }
+
+    protected void Fall()
+    {
+        StartCoroutine(CoDeath());
+    }
+
+    protected void Damage()
+    {
+        PlayAnimation(PlayerAnim.SpikeDamage);
+        StartCoroutine(CoDeath(1f));
+    }
+
+    private IEnumerator CoDeath(float timeWait = 1.5f)
+    {
+        yield return new WaitForSeconds(timeWait);
+        MainController.Instance.PlayerDeath();
     }
 
     //// Контакт с коином.
@@ -73,4 +103,9 @@ public class Player : Character
     //    collision.GetComponent<ButtonQuest>().enabled = false;
     //}
 
+}
+
+public enum PlayerAnim
+{
+    SpikeDamage
 }

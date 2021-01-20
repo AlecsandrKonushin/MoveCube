@@ -4,19 +4,21 @@ using UnityEngine;
 /// <summary>
 /// Персонаж. Умеет двигаться, имеет цвет.
 /// </summary>
+[RequireComponent(typeof(CharacterContacts))]
 public class Character : ColorObject
 {
     [SerializeField] protected float speed = 8;
-    [SerializeField] protected GameObject[] myColliders;
 
     protected Animator animator;
     protected SpriteRenderer spriteRen;
+    protected CharacterContacts contacts;
 
     protected bool fall = false;
     protected bool canMove = false;
     protected Vector3 newPos;
 
     protected Direction directionMove;
+    public Direction GetDirectionMove { get => directionMove; }
     protected const float offsetBlock = 1f;
     protected const float offsetswipe = 20f;
 
@@ -24,6 +26,7 @@ public class Character : ColorObject
     {
         spriteRen = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        contacts = GetComponent<CharacterContacts>();
     }
 
     protected void Update()
@@ -43,15 +46,8 @@ public class Character : ColorObject
     {
     }
 
-    protected IEnumerator CoFallPlayer()
-    {
-        PlayAnimation(CharacterAnim.Fall);
-        yield return new WaitForSeconds(1.5f);
-        MainController.Instance.PlayerEndMove();
-    }
-
     /// <summary>
-    /// Задача следующей позиции в определённом направлении до препятсвия или стены.
+    /// Задача следующей позиции в определённом направлении до края карты.
     /// </summary>
     /// <param name="direction"></param>
     public void SetNewPosition(Direction direction)
@@ -61,19 +57,19 @@ public class Character : ColorObject
         switch (direction)
         {
             case Direction.Up:
-                myColliders[0].SetActive(true);
+                contacts.EnableCollider(0);
                 newPos = new Vector3(transform.position.x, transform.position.y + offsetswipe, transform.position.z);
                 break;
             case Direction.Right:
-                myColliders[1].SetActive(true);
+                contacts.EnableCollider(1);
                 newPos = new Vector3(transform.position.x + offsetswipe, transform.position.y, transform.position.z);
                 break;
             case Direction.Down:
-                myColliders[2].SetActive(true);
+                contacts.EnableCollider(2);
                 newPos = new Vector3(transform.position.x, transform.position.y - offsetswipe, transform.position.z);
                 break;
             case Direction.Left:
-                myColliders[3].SetActive(true);
+                contacts.EnableCollider(3);
                 newPos = new Vector3(transform.position.x - offsetswipe, transform.position.y, transform.position.z);
                 break;
         }
@@ -126,15 +122,7 @@ public class Character : ColorObject
         newPos = position;
         fall = true;
 
-        StartCoroutine(CoFallPlayer());
-    }
-
-    public void DeEnableMyColliders()
-    {
-        foreach (var collider in myColliders)
-        {
-            collider.SetActive(false);
-        }
+        PlayAnimation(CharacterAnim.Fall);
     }
 
     public void PlayAnimation(CharacterAnim anim)

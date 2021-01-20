@@ -4,7 +4,7 @@ public class SwipeController : MonoBehaviour
 {
     private Vector3 firstPress;
     private Vector3 lastPress;
-    private float minDragDistance = 2;
+    private float minDragDistance = 1;
 
     private void Update()
     {
