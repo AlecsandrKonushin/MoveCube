@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// Персонаж. Умеет двигаться, имеет цвет.
+/// </summary>
 public class Character : ColorObject
 {
     [SerializeField] protected float speed = 8;
@@ -19,7 +22,7 @@ public class Character : ColorObject
 
     protected void Start()
     {
-        spriteRen = GetComponent<SpriteRenderer>();
+        spriteRen = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
 
@@ -47,6 +50,10 @@ public class Character : ColorObject
         MainController.Instance.PlayerEndMove();
     }
 
+    /// <summary>
+    /// Задача следующей позиции в определённом направлении до препятсвия или стены.
+    /// </summary>
+    /// <param name="direction"></param>
     public void SetNewPosition(Direction direction)
     {
         directionMove = direction;
@@ -74,6 +81,11 @@ public class Character : ColorObject
         canMove = true;
     }
 
+    /// <summary>
+    /// Задача следующей позиции до препятсвия.
+    /// </summary>
+    /// <param name="objectPos">Препятствие</param>
+    /// <param name="offset">Отступ до препятствия. По умолчанию отсутствует</param>
     public void SetNewPosition(Vector2 objectPos, bool offset = true)
     {
         Vector2 position = objectPos;
@@ -93,6 +105,11 @@ public class Character : ColorObject
         newPos = position;
     }
 
+    /// <summary>
+    /// Установка следующей позиции до стены.
+    /// Запуск корутины падения.
+    /// </summary>
+    /// <param name="wallPos"></param>
     public void SetPositionBeforeWall(Vector2 wallPos)
     {
         Vector2 position = transform.position;

@@ -24,6 +24,8 @@ public class PlayerContacts : MonoBehaviour
             ContactWithChangeColor();
         else if (collision.transform.tag == "portal")
             ContactWithPortal();
+        else if (collision.transform.tag == "enemy")
+            ContactWithEnemy();
     }
 
     private void ContactWithBlock()
@@ -39,9 +41,9 @@ public class PlayerContacts : MonoBehaviour
 
     private void ContactWithCoockie()
     {
-        Coockie door = collisionObject.GetComponent<Coockie>();
+        Coockie coockie = collisionObject.GetComponent<Coockie>();
 
-        player.SetNewPosition(door.transform.position, false);
+        player.SetNewPosition(coockie.transform.position, false);
 
         MainController.Instance.IsWinLevel = true;
         player.DeEnableMyColliders();
@@ -68,6 +70,16 @@ public class PlayerContacts : MonoBehaviour
     private void ContactWithPortal()
     {
 
+    }
+
+    public void ContactWithEnemy()
+    {
+        Enemy enemy = collisionObject.GetComponent<Enemy>();
+
+        if(enemy.Type == TypeEnemy.Spike)
+        {
+
+        }
     }
 
     private void ContactWallPortal(Block wall)
