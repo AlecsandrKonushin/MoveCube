@@ -7,14 +7,7 @@ public class Enemy : Character
 
     protected override void EndMove()
     {
-        if (fall)
-        {
-            return;
-        }
-        else
-        {
-            canMove = false;
-        }
+        base.EndMove();
     }
 }
 

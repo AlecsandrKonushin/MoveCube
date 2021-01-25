@@ -8,9 +8,21 @@ public class CharacterContacts : MonoBehaviour
 {
     [SerializeField] protected GameObject[] myColliders;
 
+    protected Character character;
+
     protected GameObject collisionObject;
 
-    public virtual void CollisionWithObjeсt(GameObject collision) { }
+    public virtual void CollisionWithObjeсt(GameObject collision)
+    {
+        collisionObject = collision;
+        Debug.Log("collision == " + collision.gameObject.tag);
+        if (collision.transform.tag == "block")
+            ContactWithBlock();
+        else if (collision.transform.tag == "wall")
+            ContactWithWall();        
+        else if (collision.transform.tag == "portal")
+            ContactWithPortal();
+    }
 
     public void EnableCollider(int numberCollider)
     {
@@ -24,4 +36,27 @@ public class CharacterContacts : MonoBehaviour
             collider.SetActive(false);
         }
     }
+
+    protected virtual void ContactWithBlock() 
+    {
+        Block block = collisionObject.GetComponent<Block>();
+
+        if (character.MyColor != block.MyColor)
+        {
+            character.SetNewPosition(block.transform.position);
+            DeEnableMyColliders();
+        }
+    }
+
+    protected virtual void ContactWithWall()
+    {
+        DeEnableMyColliders();
+
+        character.SetPositionBeforeWall(collisionObject.transform.position);
+    }
+
+    protected virtual void ContactWithCoockie() { }
+
+    protected virtual void ContactWithPortal() { }
+
 }

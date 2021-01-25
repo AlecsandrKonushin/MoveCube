@@ -7,13 +7,15 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterContacts))]
 public class Character : ColorObject
 {
+    public delegate void Move();
+    public event Move AfterMove;
+
     [SerializeField] protected float speed = 8;
 
     protected Animator animator;
     protected SpriteRenderer spriteRen;
     protected CharacterContacts contacts;
 
-    protected bool fall = false;
     protected bool canMove = false;
     protected Vector3 newPos;
 
@@ -44,6 +46,10 @@ public class Character : ColorObject
 
     protected virtual void EndMove()
     {
+        canMove = false;
+
+        if (AfterMove != null)
+            AfterMove.Invoke();
     }
 
     /// <summary>
@@ -120,9 +126,14 @@ public class Character : ColorObject
             position.x = wallPos.x + 1;
 
         newPos = position;
-        fall = true;
+        AfterMove += Fall;
 
         PlayAnimation(CharacterAnim.Fall);
+    }
+
+    protected virtual void Fall()
+    {
+        AfterMove -= Fall;
     }
 
     public void PlayAnimation(CharacterAnim anim)

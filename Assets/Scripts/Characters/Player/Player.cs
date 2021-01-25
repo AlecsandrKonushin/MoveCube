@@ -6,24 +6,14 @@ public class Player : Character
 {
     [SerializeField] private Sprite[] mySprites;
 
-    private bool spikeDamage = false;
-    public bool SpikeDamage { set => spikeDamage = value; }
+    [SerializeField]private Enemy enemyCollision;
+    public Enemy SetEnemyCollision { set => enemyCollision = value; }
 
     protected override void EndMove()
     {
-        if (fall)
-        {
-            Fall();
-        }
-        else if (spikeDamage)
-        {
-            Damage();
-        }
-        else
-        {
-            canMove = false;
-            MainController.Instance.PlayerEndMove();
-        }
+        base.EndMove();
+
+        MainController.Instance.PlayerEndMove();
     }
 
     public void SetNewColor(AllColor color)
@@ -40,18 +30,28 @@ public class Player : Character
             spriteRen.sprite = mySprites[3];
     }
 
+    public void PushEnemy()
+    {
+        AfterMove -= PushEnemy;
+
+        enemyCollision.SetNewPosition(directionMove);
+    }
+
     public void PlayAnimation(PlayerAnim anim)
     {
         animator.SetTrigger(anim.ToString());
     }
 
-    protected void Fall()
+    protected override void Fall()
     {
+        base.Fall();
         StartCoroutine(CoDeath());
     }
 
-    protected void Damage()
+    public void Damage()
     {
+        AfterMove -= Damage;
+
         PlayAnimation(PlayerAnim.SpikeDamage);
         StartCoroutine(CoDeath(1f));
     }

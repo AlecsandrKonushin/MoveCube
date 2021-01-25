@@ -5,11 +5,9 @@
 /// </summary>
 public class PlayerContacts : CharacterContacts
 {
-    private Player player;
-
     private void Start()
     {
-        player = GetComponent<Player>();
+        character = GetComponent<Character>();
     }
 
     /// <summary>
@@ -19,38 +17,21 @@ public class PlayerContacts : CharacterContacts
     /// <param name="collision"></param>
     public override void CollisionWithObjeсt(GameObject collision)
     {
-        collisionObject = collision;
+        base.CollisionWithObjeсt(collision);
 
-        if (collision.transform.tag == "block")
-            ContactWithBlock();
-        else if (collision.transform.tag == "wall")
-            ContactWithWall();
-        else if (collision.transform.tag == "coockie")
+        if (collision.transform.tag == "coockie")
             ContactWithCoockie();
         else if (collision.transform.tag == "colorChange")
             ContactWithChangeColor();
-        else if (collision.transform.tag == "portal")
-            ContactWithPortal();
         else if (collision.transform.tag == "enemy")
             ContactWithEnemy();
     }
 
-    private void ContactWithBlock()
-    {
-        Block block = collisionObject.GetComponent<Block>();
-
-        if (player.MyColor != block.MyColor)
-        {
-            player.SetNewPosition(block.transform.position);
-            DeEnableMyColliders();
-        }
-    }
-
-    private void ContactWithCoockie()
+    protected override void ContactWithCoockie()
     {
         Coockie coockie = collisionObject.GetComponent<Coockie>();
 
-        player.SetNewPosition(coockie.transform.position, false);
+        character.SetNewPosition(coockie.transform.position, false);
 
         MainController.Instance.IsWinLevel = true;
         DeEnableMyColliders();
@@ -60,24 +41,12 @@ public class PlayerContacts : CharacterContacts
     {
         ColorObject colorObj = collisionObject.GetComponent<ColorObject>();
 
-        if (colorObj.MyColor != player.MyColor)
+        if (colorObj.MyColor != character.MyColor)
         {
-            player.SetNewColor(colorObj.MyColor);
+            (character as Player).SetNewColor(colorObj.MyColor);
 
             Destroy(colorObj.gameObject, .3f);
         }
-    }
-
-    private void ContactWithPortal()
-    {
-
-    }
-
-    private void ContactWithWall()
-    {
-        DeEnableMyColliders();
-
-        player.SetPositionBeforeWall(collisionObject.transform.position);
     }
 
     private void ContactWithEnemy()
@@ -86,12 +55,18 @@ public class PlayerContacts : CharacterContacts
 
         if (enemy.Type == TypeEnemy.Spike)
         {
+            Player player = character as Player;
             player.SetNewPosition(enemy.transform.position, true);
             DeEnableMyColliders();
 
-            if (player.GetDirectionMove == (enemy as SpikeEnemy).GetSpikeDirection)
-            {                
-                player.SpikeDamage = true;
+            if (character.GetDirectionMove == (enemy as SpikeEnemy).GetSpikeDirection)
+            {
+                player.AfterMove += player.Damage;
+            }
+            else
+            {
+                player.SetEnemyCollision = enemy;
+                player.AfterMove += player.PushEnemy;
             }
         }
     }
