@@ -12,14 +12,19 @@ public class CharacterContacts : MonoBehaviour
 
     protected GameObject collisionObject;
 
+    protected void Start()
+    {
+        character = GetComponent<Character>();
+    }
+
     public virtual void CollisionWithObjeсt(GameObject collision)
     {
         collisionObject = collision;
-        Debug.Log("collision == " + collision.gameObject.tag);
+
         if (collision.transform.tag == "block")
             ContactWithBlock();
         else if (collision.transform.tag == "wall")
-            ContactWithWall();        
+            ContactWithWall();
         else if (collision.transform.tag == "portal")
             ContactWithPortal();
     }
@@ -37,7 +42,7 @@ public class CharacterContacts : MonoBehaviour
         }
     }
 
-    protected virtual void ContactWithBlock() 
+    protected virtual void ContactWithBlock()
     {
         Block block = collisionObject.GetComponent<Block>();
 

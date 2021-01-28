@@ -9,6 +9,8 @@ public class Player : Character
     [SerializeField]private Enemy enemyCollision;
     public Enemy SetEnemyCollision { set => enemyCollision = value; }
 
+    [SerializeField] private float timeSpikeDamage = 1f;
+
     protected override void EndMove()
     {
         base.EndMove();
@@ -42,23 +44,16 @@ public class Player : Character
         animator.SetTrigger(anim.ToString());
     }
 
-    protected override void Fall()
-    {
-        base.Fall();
-        StartCoroutine(CoDeath());
-    }
-
     public void Damage()
     {
         AfterMove -= Damage;
 
         PlayAnimation(PlayerAnim.SpikeDamage);
-        StartCoroutine(CoDeath(1f));
+        Invoke(nameof(Death), timeSpikeDamage);
     }
 
-    private IEnumerator CoDeath(float timeWait = 1.5f)
+    protected override void Death()
     {
-        yield return new WaitForSeconds(timeWait);
         MainController.Instance.PlayerDeath();
     }
 

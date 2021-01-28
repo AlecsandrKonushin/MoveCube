@@ -5,11 +5,6 @@
 /// </summary>
 public class PlayerContacts : CharacterContacts
 {
-    private void Start()
-    {
-        character = GetComponent<Character>();
-    }
-
     /// <summary>
     /// Столкновение с объектом.
     /// Объект определяется по тегу.

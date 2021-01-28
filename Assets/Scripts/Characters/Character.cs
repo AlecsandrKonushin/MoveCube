@@ -11,6 +11,7 @@ public class Character : ColorObject
     public event Move AfterMove;
 
     [SerializeField] protected float speed = 8;
+    [SerializeField] private float timeFall = 1.5f;
 
     protected Animator animator;
     protected SpriteRenderer spriteRen;
@@ -90,19 +91,21 @@ public class Character : ColorObject
     /// <param name="offset">Отступ до препятствия. По умолчанию отсутствует</param>
     public void SetNewPosition(Vector2 objectPos, bool offset = true)
     {
-        Vector2 position = objectPos;
+        Vector2 position = transform.position;
 
         if (offset)
         {
             if (directionMove == Direction.Up)
-                position.y -= 1;
+                position.y = objectPos.y - 1;
             else if (directionMove == Direction.Right)
-                position.x -= 1;
+                position.x = objectPos.x - 1;
             else if (directionMove == Direction.Down)
-                position.y += 1;
+                position.y = objectPos.y + 1;
             else if (directionMove == Direction.Left)
-                position.x += 1;
+                position.x = objectPos.x + 1;
         }
+        else
+            position = objectPos;
 
         newPos = position;
     }
@@ -134,6 +137,13 @@ public class Character : ColorObject
     protected virtual void Fall()
     {
         AfterMove -= Fall;
+        GetComponent<BoxCollider2D>().enabled = false;
+        Invoke(nameof(Death), timeFall);
+    }
+
+    protected virtual void Death()
+    {
+
     }
 
     public void PlayAnimation(CharacterAnim anim)

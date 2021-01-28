@@ -1,13 +1,14 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class Enemy : Character
 {
     [SerializeField] private TypeEnemy type;
     public TypeEnemy Type { get => type; }
 
-    protected override void EndMove()
+    protected override void Death()
     {
-        base.EndMove();
+        Destroy(gameObject);
     }
 }
 

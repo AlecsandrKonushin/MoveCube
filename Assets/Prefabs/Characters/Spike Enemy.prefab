@@ -93,6 +93,8 @@ GameObject:
   - component: {fileID: 499981213972052244}
   - component: {fileID: 4594421589378141176}
   - component: {fileID: 5179167148610439812}
+  - component: {fileID: 483795072154193629}
+  - component: {fileID: 36374223767042420}
   m_Layer: 0
   m_Name: Spike Enemy
   m_TagString: enemy
@@ -130,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myColor: 4
   speed: 8
+  timeFall: 1.5
   type: 0
   spikeDirection: 2
 --- !u!114 &4594421589378141176
@@ -175,6 +178,46 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!50 &483795072154193629
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499981213972052249}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.01
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!95 &36374223767042420
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499981213972052249}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1599be25b0305bd4db0fc1eb607b5c5d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &889479224053024448
 GameObject:
   m_ObjectHideFlags: 0
@@ -245,7 +288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d94b3b24e3022814fb7e4c262152fc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contacts: {fileID: 0}
 --- !u!1 &2891076133051169560
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +358,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d94b3b24e3022814fb7e4c262152fc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contacts: {fileID: 0}
 --- !u!1 &4200541851280825211
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,7 +428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d94b3b24e3022814fb7e4c262152fc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contacts: {fileID: 0}
 --- !u!1 &4463875768619252607
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,4 +532,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d94b3b24e3022814fb7e4c262152fc2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contacts: {fileID: 0}

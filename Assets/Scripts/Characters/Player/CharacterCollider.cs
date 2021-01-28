@@ -11,7 +11,6 @@ public class CharacterCollider : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.LogError("Не работает колайдер у enemy");
         contacts.CollisionWithObjeсt(collision.gameObject);
     }
 }
