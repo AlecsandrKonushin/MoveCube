@@ -80,43 +80,6 @@ public class PlayerContacts : CharacterContacts
     {
         Bottle bottle = collisionObject.GetComponent<Bottle>();
 
-        player.SetNewPosition(bottle.transform.position, true);
-
-        player.ChangeColor(bottle.MyColor);
-    }
-
-    private void ContactWallPortal(Block wall)
-    {
-        //if (sideNow == wall.sideIn)
-        //{
-        //    DeEnableMyColliders();
-
-        //    soundCon.PlaySound("portal");
-
-        //    Vector3 exitPos = wall.ExitPortal.transform.position;
-
-        //    if (wall.sideOut == "right")
-        //    {
-        //        myTransform.position = new Vector3(exitPos.x + 2, exitPos.y);
-        //        SetDirectionPlayer("right");
-        //    }
-        //    else if (wall.sideOut == "left")
-        //    {
-        //        myTransform.position = new Vector3(exitPos.x - 2, exitPos.y);
-        //        SetDirectionPlayer("left");
-        //    }
-        //    else if (wall.sideOut == "up")
-        //    {
-        //        myTransform.position = new Vector3(exitPos.x, exitPos.y + 2);
-        //        SetDirectionPlayer("up");
-        //    }
-        //    else if (wall.sideOut == "down")
-        //    {
-        //        myTransform.position = new Vector3(exitPos.x, exitPos.y - 2);
-        //        SetDirectionPlayer("down");
-        //    }
-
-        //    return;
-        //}
+        player.ChangeColor(bottle);
     }
 }

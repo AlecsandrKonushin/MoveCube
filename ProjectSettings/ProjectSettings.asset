@@ -725,10 +725,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: d06417d2-b0c9-4a87-8de6-3e8f83992b52
+  cloudProjectId: 9ad575ee-1338-4f0c-838b-98a32fd8497c
   framebufferDepthMemorylessMode: 0
   projectName: MoveCube
-  organizationId: denrifaq
+  organizationId: alekasanderconushin
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

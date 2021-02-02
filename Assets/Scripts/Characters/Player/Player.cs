@@ -57,9 +57,26 @@ public class Player : Character
         MainController.Instance.PlayerDeath();
     }
 
-    public void ChangeColor(AllColor color)
+    // TODO: нужно сделать более совершенно определение момента,
+    //       когда player приходит на место bottle и надо менять цвет.
+    //       Пока сделано коряво, через задержку, на глаз.
+    public void ChangeColor(Bottle bottle)
+    {
+        StartCoroutine(CoContactWithBottle(bottle));
+    }
+
+    private IEnumerator CoContactWithBottle(Bottle bottle)
+    {
+        yield return new WaitForSeconds(.2f);
+
+        ChangePlayerColor(bottle.MyColor);
+        Destroy(bottle.gameObject);
+    }
+
+    private void ChangePlayerColor(AllColor color)
     {
         spriteRen.sprite = mySprites[(int)color];
+        myColor = color;
     }
 }
 
