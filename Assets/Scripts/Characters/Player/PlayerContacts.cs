@@ -5,6 +5,15 @@
 /// </summary>
 public class PlayerContacts : CharacterContacts
 {
+    private Player player;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        player = character as Player;    
+    }
+
     /// <summary>
     /// Столкновение с объектом.
     /// Объект определяется по тегу.
@@ -20,6 +29,8 @@ public class PlayerContacts : CharacterContacts
             ContactWithChangeColor();
         else if (collision.transform.tag == "enemy")
             ContactWithEnemy();
+        else if (collision.transform.tag == "bottle")
+            ContactWithBottle();
     }
 
     protected override void ContactWithCoockie()
@@ -38,7 +49,7 @@ public class PlayerContacts : CharacterContacts
 
         if (colorObj.MyColor != character.MyColor)
         {
-            (character as Player).SetNewColor(colorObj.MyColor);
+            player.SetNewColor(colorObj.MyColor);
 
             Destroy(colorObj.gameObject, .3f);
         }
@@ -50,7 +61,6 @@ public class PlayerContacts : CharacterContacts
 
         if (enemy.Type == TypeEnemy.Spike)
         {
-            Player player = character as Player;
             player.SetNewPosition(enemy.transform.position, true);
             DeEnableMyColliders();
 
@@ -64,6 +74,15 @@ public class PlayerContacts : CharacterContacts
                 player.AfterMove += player.PushEnemy;
             }
         }
+    }
+
+    private void ContactWithBottle()
+    {
+        Bottle bottle = collisionObject.GetComponent<Bottle>();
+
+        player.SetNewPosition(bottle.transform.position, true);
+
+        player.ChangeColor(bottle.MyColor);
     }
 
     private void ContactWallPortal(Block wall)

@@ -88,7 +88,7 @@ public class Character : ColorObject
     /// Задача следующей позиции до препятсвия.
     /// </summary>
     /// <param name="objectPos">Препятствие</param>
-    /// <param name="offset">Отступ до препятствия. По умолчанию отсутствует</param>
+    /// <param name="offset">Отступ до препятствия в одну клетку. По умолчанию есть</param>
     public void SetNewPosition(Vector2 objectPos, bool offset = true)
     {
         Vector2 position = transform.position;

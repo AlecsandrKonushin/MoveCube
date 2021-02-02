@@ -12,7 +12,7 @@ public class CharacterContacts : MonoBehaviour
 
     protected GameObject collisionObject;
 
-    protected void Start()
+    protected virtual void Start()
     {
         character = GetComponent<Character>();
     }
