@@ -1,13 +1,21 @@
 ﻿using UnityEngine;
 
-public class SwipeController : MonoBehaviour
+public class SwipeController : Singleton<SwipeController>
 {
+    public delegate void DoSwipe();
+    public event DoSwipe AfterSwipe;
+
+    private bool canSwipe = false;
+    public bool CanSwipe { set => canSwipe = value; }
+
     private Vector3 firstPress;
     private Vector3 lastPress;
     private float minDragDistance = 1;
 
     private void Update()
     {
+        if (!canSwipe)
+            return;
         if (Input.GetMouseButtonDown(0))
         {
             firstPress = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -41,6 +49,8 @@ public class SwipeController : MonoBehaviour
                     }
                 }
             }
+
+            AfterSwipe?.Invoke();
         }
     }
 }

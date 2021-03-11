@@ -8,22 +8,21 @@ public class UiController : Singleton<UiController>
     [SerializeField] private GameObject panelWin;
     [SerializeField] private GameObject panelLose;
 
+    [SerializeField] private GameObject panelButtonsUp;
+
+    private float timeAnim = .5f;
+
     public void HideBlackoutPanel()
     {
-        StartCoroutine(CoHideBlackoutPanel());
-    }
-
-    private IEnumerator CoHideBlackoutPanel()
-    {
-        blackoutPanel.GetComponent<Animator>().SetTrigger("hide");
-        yield return new WaitForSeconds(.5f);
-        blackoutPanel.SetActive(false);
+        StartCoroutine(CoHidePanel(blackoutPanel));
+        panelButtonsUp.SetActive(true);
     }
 
     #region Win level
     public void ShowWinPanel()
     {
         panelWin.SetActive(true);
+        StartCoroutine(CoHidePanel(panelButtonsUp));
     }
 
     public void ClickWinLevel()
@@ -33,13 +32,10 @@ public class UiController : Singleton<UiController>
 
     private IEnumerator CoClickWinLevel()
     {
-        panelWin.GetComponent<Animator>().SetTrigger("hide");
-        yield return new WaitForSeconds(.5f);
+        StartCoroutine(CoHidePanel(panelWin));
 
-        panelWin.SetActive(false);
+        yield return new WaitForSeconds(timeAnim);
         blackoutPanel.SetActive(true);
-
-        yield return new WaitForSeconds(.5f);
 
         MainController.Instance.NextLevel();
     }
@@ -49,6 +45,7 @@ public class UiController : Singleton<UiController>
     public void ShowLosePanel()
     {
         panelLose.SetActive(true);
+        StartCoroutine(CoHidePanel(panelButtonsUp));
     }
 
     public void ClickRestartLevel()
@@ -58,15 +55,19 @@ public class UiController : Singleton<UiController>
 
     private IEnumerator CoClickRestartLevel()
     {
-        panelLose.GetComponent<Animator>().SetTrigger("hide");
-        yield return new WaitForSeconds(.5f);
+        StartCoroutine(CoHidePanel(panelLose));
 
-        panelLose.SetActive(false);
+        yield return new WaitForSeconds(timeAnim);
         blackoutPanel.SetActive(true);
-
-        yield return new WaitForSeconds(.5f);
 
         MainController.Instance.RestartLevel();
     }
     #endregion
+
+    private IEnumerator CoHidePanel(GameObject panel)
+    {
+        panel.GetComponent<Animator>().SetTrigger("hide");
+        yield return new WaitForSeconds(timeAnim);
+        panel.SetActive(false);
+    }
 }

@@ -9,8 +9,6 @@ public class MainController : Singleton<MainController>
 
     private Player player;
 
-    private bool canSwipe = false;
-
     private bool isWinLevel = false;
     public bool IsWinLevel { set => isWinLevel = value; }
 
@@ -26,16 +24,13 @@ public class MainController : Singleton<MainController>
         player = Instantiate(playerPrefab, LevelController.Instance.CurrrentLevel.GetStartPlayerPos, Quaternion.identity);
 
         UiController.Instance.HideBlackoutPanel();
-        canSwipe = true;
+        SwipeController.Instance.CanSwipe = true;
     }
 
     public void SwipeStart(Direction direction)
     {
-        if (canSwipe)
-        {
-            canSwipe = false;
-            player.SetNewPosition(direction);
-        }
+        SwipeController.Instance.CanSwipe = false;
+        player.SetNewPosition(direction);
     }
 
     public void PlayerEndMove()
@@ -43,7 +38,7 @@ public class MainController : Singleton<MainController>
         if (isWinLevel)
             WinLevel();
         else
-            canSwipe = true;
+            SwipeController.Instance.CanSwipe = true;
     }
 
     public void PlayerDeath()
@@ -65,6 +60,8 @@ public class MainController : Singleton<MainController>
     public void RestartLevel()
     {
         LevelController.Instance.DestroyLevel();
+        if (player != null)
+            Destroy(player.gameObject);
         CreateLevel();
     }
 
