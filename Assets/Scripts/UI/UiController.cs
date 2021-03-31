@@ -64,6 +64,13 @@ public class UiController : Singleton<UiController>
     }
     #endregion
 
+    #region
+    public void ShowSettingsPanel()
+    {
+        SettingsPanelController.Instance.ShowPanel();
+    }
+    #endregion
+
     private IEnumerator CoHidePanel(GameObject panel)
     {
         panel.GetComponent<Animator>().SetTrigger("hide");

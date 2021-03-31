@@ -9,7 +9,7 @@ public class MainController : Singleton<MainController>
 
     private Player player;
 
-    private bool isWinLevel = false;
+    private bool isWinLevel = false;    
     public bool IsWinLevel { set => isWinLevel = value; }
 
     private void Start()
@@ -37,7 +37,7 @@ public class MainController : Singleton<MainController>
     {
         if (isWinLevel)
             WinLevel();
-        else
+        else if(!SettingsPanelController.Instance.SettingsPanelIsActive()) // Если не открыта панель Settings, то можно делать свайпы
             SwipeController.Instance.CanSwipe = true;
     }
 
@@ -74,4 +74,8 @@ public class MainController : Singleton<MainController>
         CreateLevel();
     }
 
+    public void ExitApp()
+    {
+        Application.Quit();
+    }
 }
