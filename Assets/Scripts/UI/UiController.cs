@@ -36,7 +36,6 @@ public class UiController : Singleton<UiController>
 
         yield return new WaitForSeconds(timeAnim);
         blackoutPanel.SetActive(true);
-        yield return new WaitForSeconds(timeAnim);
 
         MainController.Instance.NextLevel();
     }

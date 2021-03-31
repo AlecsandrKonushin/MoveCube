@@ -35,9 +35,7 @@ public class PlayerContacts : CharacterContacts
 
     protected override void ContactWithCoockie()
     {
-        Coockie coockie = collisionObject.GetComponent<Coockie>();
-
-        character.SetNewPosition(coockie.transform.position, false);
+        character.SetNewPosition(collisionObject.transform.position, false);
 
         MainController.Instance.IsWinLevel = true;
         DeEnableMyColliders();
@@ -64,7 +62,7 @@ public class PlayerContacts : CharacterContacts
             player.SetNewPosition(enemy.transform.position, true);
             DeEnableMyColliders();
 
-            if (character.GetDirectionMove == (enemy as SpikeEnemy).GetSpikeDirection)
+            if (character.GetDirectionMove == (enemy as SpikeEnemy).GetDangerDirectionMove)
             {
                 player.AfterMove += player.Damage;
             }

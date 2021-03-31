@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 483795072154193629}
   - component: {fileID: 36374223767042420}
   m_Layer: 0
-  m_Name: Spike Enemy
+  m_Name: SpikeEnemyDown
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   speed: 8
   timeFall: 1.5
   type: 0
-  spikeDirection: 2
+  spikeDirection: 0
 --- !u!114 &4594421589378141176
 MonoBehaviour:
   m_ObjectHideFlags: 0

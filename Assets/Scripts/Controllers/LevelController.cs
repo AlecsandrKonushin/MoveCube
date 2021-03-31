@@ -2,17 +2,36 @@
 
 public class LevelController : Singleton<LevelController>
 {
-    [SerializeField] private LevelPrefab[] prefablevels;
+    [SerializeField] private LevelPrefab[] prefabLessonLevels;
+    [SerializeField] private LevelPrefab[] prefabLevels;
     [SerializeField] private Vector2 spawnLevelPos;
+    [SerializeField] private bool lessonLevels;
 
     private int currentLevelNumber = 0;
 
+    private LevelPrefab[] changeLevels;
     private LevelPrefab currentLevel;
     public LevelPrefab CurrrentLevel { get => currentLevel; }
 
+    public override void Awake()
+    {
+        base.Awake();
+
+        if (lessonLevels)
+            changeLevels = prefabLessonLevels;
+        else
+            changeLevels = prefabLevels;
+    }
+
     public void CreateCurrentLevel()
     {
-        currentLevel = Instantiate(prefablevels[currentLevelNumber], spawnLevelPos, Quaternion.identity);
+        if (currentLevelNumber >= changeLevels.Length)
+        {
+            changeLevels = prefabLevels;
+            currentLevelNumber = 0;
+        }
+
+        currentLevel = Instantiate(changeLevels[currentLevelNumber], spawnLevelPos, Quaternion.identity);
     }
 
     public void DestroyLevel()

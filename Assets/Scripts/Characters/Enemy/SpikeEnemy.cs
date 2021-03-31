@@ -2,7 +2,7 @@
 
 public class SpikeEnemy : Enemy
 {
-    [SerializeField] private Direction spikeDirection;
-    public Direction GetSpikeDirection { get => spikeDirection; }
+    [SerializeField] private Direction dangerDirectionMove;
+    public Direction GetDangerDirectionMove { get => dangerDirectionMove; }
 
 }
