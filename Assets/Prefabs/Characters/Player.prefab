@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myColor: 0
-  speed: 8
+  speed: 10
   timeFall: 1.5
   mySprites:
   - {fileID: 21300000, guid: 22f780bc90bafc640b42c5fa79ff45ae, type: 3}
