@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: be31eb621eebea540971796f1f8108a1
+guid: a74da79f6f7fe1041aa2710259c7cd88
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Zamenhof
+  fontName: Montserrat
   fontNames:
-  - Zamenhof
+  - Montserrat
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
